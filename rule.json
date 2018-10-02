@@ -1,0 +1,15 @@
+{
+    "predicate": "all",
+    "rules": {
+        "rule_1": {
+            "field":"from",
+            "predicate": "contains",
+            "value":"vasanthn7@gmail.com"
+        },
+        "rule_2": {
+            "field":"date",
+            "predicate": "after",
+            "value":"2018/02/10"
+        }
+    }
+}

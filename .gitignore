@@ -103,6 +103,7 @@ venv.bak/
 #Gmail Credentials
 credentials.json
 token.json
+client_id.json
 
 # mypy
 .mypy_cache/
