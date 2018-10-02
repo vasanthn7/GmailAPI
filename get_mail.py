@@ -19,14 +19,28 @@ class GetMail:
         service = build('gmail', 'v1', http=creds.authorize(Http()))
 
         results = service.users().messages().list(userId=self.user_id,).execute()
-        print(results)
+        # print(results)
         for message in results['messages']:
             data = {}
             content = service.users().messages().get(userId='me', id=message['id']).execute()
 
             data['id'] = message['id']
-            data['labels'] = content['labelIds']
-            data['message'] = base64.urlsafe_b64decode(content['payload']['parts'][0]['body']['data']).decode('utf-8')
+            data['labels'] = ' '.join(content['labelIds'])
+            # pp = pprint.PrettyPrinter(indent=4)
+            # print()
+            # print("-----------------------------------------------------------------------------------------------------------------")
+            # print()
+            # pp.pprint(content['payload'])
+            try:
+                data['message'] = base64.urlsafe_b64decode(content['payload']['parts'][0]['body']['data']).decode('utf-8')
+            except KeyError as err:
+                try:
+                    data['message'] = base64.urlsafe_b64decode(content['payload']['body']['data']).decode('utf-8')
+                except KeyError as err:
+                    if(0 == content['payload']['body']['size']):
+                        print("Empty Message")
+                        data['message'] = ''
+
 
             headers = content['payload']['headers']
             for header in headers:
@@ -39,11 +53,11 @@ class GetMail:
                 elif header['name'] == 'To':
                     data['to'] = header['value']
             mail_data.append(data)
-
         return mail_data
 
 
 if __name__ == '__main__':
     pp = pprint.PrettyPrinter(indent=4)
     obj = GetMail('me')
+    # obj.get_mail_id()
     pp.pprint(obj.get_mail_id())
