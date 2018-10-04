@@ -28,10 +28,17 @@ class GetMail:
         self.service = build('gmail', 'v1', http=self.creds.authorize(Http()))
 
 
-    def get_mail_id(self):
+    def get_mail_id(self,*args):
         mail_data = []
-
-        results = self.service.users().messages().list(userId=self.user_id,).execute()
+        if (len(args) == 1):
+            results = {}
+            results['messages'] = []
+            for mail_id in args[0]:
+                results['messages'].append({'id': mail_id})
+            # print(results)
+        else:
+            results = self.service.users().messages().list(userId=self.user_id,).execute()
+            print(results)
         for message in results['messages']:
             data = {}
             content = self.service.users().messages().get(userId='me', id=message['id']).execute()
@@ -79,4 +86,4 @@ class GetMail:
 
 if __name__ == '__main__':
     obj = GetMail()
-    print(obj.get_mail_id())
+    print(obj.get_mail_id(['1663f2ea2e0c9bad','1663f2ea2e0c9bad']))

@@ -5,7 +5,7 @@ import mysql.connector
 from get_mail import GetMail
 
 class StoreData:
-    def __init__(self,user_id):
+    def __init__(self):
         DB_NAME = 'MailDB'
         try:
             self.mydb = mysql.connector.connect(host="localhost", user="root", passwd="rootpasswd")
@@ -57,9 +57,12 @@ class StoreData:
             else:
                 print(err)
 
-    def add_data(self,user_id):
-        GMobj = GetMail(user_id)
-        mails = GMobj.get_mail_id()
+    def add_data(self,*args):
+        GMobj = GetMail()
+        if(len(args) == 0):
+            mails = GMobj.get_mail_id()
+        elif(len(args) == 1):
+            mails = GMobj.get_mail_id(args[0])
         add_mail = "INSERT INTO Emails (mail_id, received, labels, subject,from_address ,to_address, message) VALUES(%s,%s,%s,%s,%s,%s,%s)"
         for mail in mails:
             try:
@@ -81,5 +84,5 @@ class StoreData:
         self.mydb.close()
 
 if __name__ == '__main__':
-    obj = StoreData('me')
-    obj.add_data('me')
+    obj = StoreData()
+    obj.add_data()

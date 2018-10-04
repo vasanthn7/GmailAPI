@@ -12,11 +12,12 @@ class Parser:
                         "add_label":["addLabelIds"],
                         "delete":["addLabelIds", 'TRASH'],
                         "starred":["addLabelIds", 'STARRED'],
-                        "archive_message":["removeLabelIds", 'INBOX']
+                        "archive_message":["removeLabelIds", 'INBOX'],
+                        "restore_message":["addLabelIds", 'INBOX']
                     }
         filter_list = ["from","to","subject","label","date","message"]
         date_predicate = ['after','before']
-        other_predicate = ['contains', 'does_not_contain']
+        other_predicate = ['contains', 'does_not_contain', 'equal_to', 'not_equal_to']
 
         filter = {}
         filter['criteria'] = []

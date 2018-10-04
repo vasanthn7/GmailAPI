@@ -2,6 +2,7 @@ from get_mail import GetMail
 from validate_rule import Parser
 from datetime import datetime
 import pprint
+from store_data import StoreData
 
 class UpdateMail:
     def __init__(self,filename):
@@ -11,7 +12,6 @@ class UpdateMail:
     def filter_mail(self):
         obj = GetMail()
         mails = obj.get_mail_id()
-        print("User Id: ",end='')
         self.user_id = obj.user_id
         self.service = obj.service
         mail_ids = []
@@ -42,6 +42,21 @@ class UpdateMail:
                         filter_mail.append(mail)
                         mail_ids.append(mail['id'])
 
+                elif rule['predicate'] == 'does_not_contain':
+                    if (mail[rule['field']].find(rule['value']) == -1):
+                        filter_mail.append(mail)
+                        mail_ids.append(mail['id'])
+
+                elif rule['predicate'] == 'equal_to':
+                    if (mail[rule['field']] == rule['value']):
+                        filter_mail.append(mail)
+                        mail_ids.append(mail['id'])
+
+                elif rule['predicate'] == 'not_equal_to':
+                    if (mail[rule['field']] != rule['value']):
+                        filter_mail.append(mail)
+                        mail_ids.append(mail['id'])
+
             if(self.filter['predicate'] == 'all'):
                 mails = filter_mail
 
@@ -60,6 +75,11 @@ class UpdateMail:
                 action_body[action] = self.filter['action'][action]
         return_status = self.service.users().messages().batchModify(userId=self.user_id, body=action_body).execute()
         print(return_status)
+        obj = StoreData()
+        print(type(action_body['ids']))
+        print(action_body['ids'])
+        obj.add_data(action_body['ids'])
+
 
 if __name__ == '__main__':
     obj = UpdateMail('rule.json')

@@ -1,16 +1,16 @@
 {
-    "predicate": "any",
+    "predicate": "all",
     "rules": [
         {
-            "field":"from",
-            "predicate": "contains",
-            "value":"vasanthn7@gmail.com"
+            "field":"date",
+            "predicate": "before",
+            "value":"2018/10/03"
         },
         {
-            "field":"date",
-            "predicate": "after",
-            "value":"2018/10/03"
+            "field":"message",
+            "predicate": "does_not_contain",
+            "value":"Test"
         }
     ],
-    "actions":["starred", "mark_read"]
+    "actions":["mark_read","starred", "restore_message"]
 }
