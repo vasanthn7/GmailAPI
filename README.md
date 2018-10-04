@@ -12,4 +12,4 @@ DB_PASSWORD=<Database User Password>
 ```
 * run `python3 store_data.py` to provide access and store emails in database
 * run `python3 update_mail.py` to take actions based on rules listed in `rule.json`
-* Read `Filter_instructions.md` and change `rule.json accordingly`
+* Read `Filter_instructions.md` and change `rule.json` accordingly
