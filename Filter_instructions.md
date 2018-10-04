@@ -14,7 +14,7 @@
 * value for `date` is in the format `%Y/%m/%d`
 * value for other fields is a string
 ### Example
-'''
+```
 "rules": [
     {
         "field":"date",
@@ -27,12 +27,12 @@
         "value":"Test"
     }
 ]
-'''
+```
 
 ## Actions:
 * `actions` has a list of actions that will occur on the order of declaration
 * actions include `mark_read`, `mark_unread`, `add_label`, `delete`, `starred`, `archive_message` and `restore_message`
 ###Example
-'''
+```
 "actions":["mark_read","starred", "restore_message"]
-'''
+```
