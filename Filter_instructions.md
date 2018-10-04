@@ -36,3 +36,5 @@
 ```
 "actions":["mark_read","starred", "restore_message"]
 ```
+
+**Refer rule.json for sample**
