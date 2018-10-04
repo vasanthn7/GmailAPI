@@ -4,18 +4,29 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import base64,pprint
 
-from filter_parser import Parser
 
 class GetMail:
-    def __init__(self,user_id):
-        self.SCOPES = 'https://www.googleapis.com/auth/gmail.modify'
-        self.user_id = user_id
+    def __init__(self):
+        self.SCOPES = 'https://www.googleapis.com/auth/gmail.settings.basic https://mail.google.com/ https://www.googleapis.com/auth/userinfo.profile'
         store = file.Storage('token.json')
-        creds = store.get()
-        if not creds or creds.invalid:
-            flow = client.flow_from_clientsecrets('credentials.json', self.SCOPES)
-            creds = tools.run_flow(flow, store)
-        self.service = build('gmail', 'v1', http=creds.authorize(Http()))
+        self.creds = store.get()
+        if not self.creds or self.creds.invalid:
+            flow = client.flow_from_clientsecrets('client_id.json', self.SCOPES)
+            self.creds = tools.run_flow(flow, store)
+
+        user_info_service = build(
+            serviceName='oauth2', version='v2',
+            http=self.creds.authorize(Http()))
+        user_info = None
+        user_info = user_info_service.userinfo().get().execute()
+        if user_info and user_info.get('id'):
+            self.user_id = user_info.get('id')
+            # print(self.user_id)
+        else:
+            raise NoUserIdException()
+
+        self.service = build('gmail', 'v1', http=self.creds.authorize(Http()))
+
 
     def get_mail_id(self):
         mail_data = []
@@ -51,6 +62,9 @@ class GetMail:
             mail_data.append(data)
         return mail_data
 
+    # def get_user_info(self):
+
+
     # def update_mail(self,filename):
     #     # filter = Parser(filename).filter_mail()
     #     filter = {
@@ -64,5 +78,5 @@ class GetMail:
     #     result = self.service.users().settings().filters().create(userId='me', body=filter).execute()
 
 if __name__ == '__main__':
-    obj = GetMail('me')
-    obj.get_mail_id()
+    obj = GetMail()
+    print(obj.get_mail_id())
