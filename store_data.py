@@ -1,14 +1,14 @@
 import pprint
 import datetime
 import mysql.connector
-
+from decouple import config
 from get_mail import GetMail
 
 class StoreData:
     def __init__(self):
         DB_NAME = 'MailDB'
         try:
-            self.mydb = mysql.connector.connect(host="localhost", user="root", passwd="rootpasswd")
+            self.mydb = mysql.connector.connect(host="localhost", user=config('DB_USER'), passwd=config('DB_PASSWORD'))
         except mysql.connector.Error as err:
             if(1045 == err.errno):
                 print("Invalid credentials, Access denied")

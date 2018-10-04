@@ -100,10 +100,13 @@ venv.bak/
 # mkdocs documentation
 /site
 
-#Gmail Credentials
+# Gmail Credentials
 credentials.json
 token.json
 client_id.json
+
+# decouple
+.env
 
 # mypy
 .mypy_cache/
