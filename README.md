@@ -1,5 +1,5 @@
 # GmailAPI
-Python Wrapper for Gmail API
+Python application using Gmail API to filter and modify emails based on rules
 
 ## Instalation
 * Once cloned, install all the packages specified in the requirements.txt
