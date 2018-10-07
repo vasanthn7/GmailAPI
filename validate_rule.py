@@ -5,11 +5,11 @@ class Parser:
     def __init__(self,filename):
         with open(filename) as json_file:
             self.data = json.load(json_file)
-            if(self.data['predicate'] != 'any' or self.data['predicate'] != 'all'):
+            if(self.data['predicate'] != 'any' and self.data['predicate'] != 'all'):
                 print("Invalid predicate \'" + self.data['predicate'] + "\'")
                 print("Setting predicate to \'all\'")
                 self.data['predicate'] = 'all'
-                
+
     def validate_data(self):
         action_dict = { "mark_read": ["removeLabelIds", 'UNREAD'],
                         "mark_unread":["addLabelIds", 'UNREAD'],
