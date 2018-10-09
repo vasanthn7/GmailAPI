@@ -1,7 +1,7 @@
 # GmailAPI
 Python application using Gmail API to filter and modify emails based on rules
 
-## Instalation
+## Installation
 * Once cloned, install all the packages specified in the requirements.txt
 * Get credentials from google for Gmail API and store it as `credentials.json` in the working dirrectory
 * Install MySQL drivers(mysql-dev(el) for linux based system)
